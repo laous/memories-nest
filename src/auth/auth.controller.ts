@@ -18,10 +18,14 @@ export class AuthController {
   @Get('signin')
   @UsePipes(new ValidationPipe())
   @HttpCode(HttpStatus.OK)
-  async signIn(@Body() user: SignInDto) {}
+  async signIn(@Body() user: SignInDto) {
+    return await this.authService.signIn(user);
+  }
 
   @Post('register')
   @UsePipes(new ValidationPipe())
   @HttpCode(HttpStatus.CREATED)
-  async register(@Body() user: RegisterDto) {}
+  async register(@Body() user: RegisterDto) {
+    return await this.authService.register(user);
+  }
 }

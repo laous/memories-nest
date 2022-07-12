@@ -1,6 +1,6 @@
-import { ForbiddenException, Injectable } from '@nestjs/common';
+import { ForbiddenException, Injectable, NotFoundException } from '@nestjs/common';
 import { PrismaService } from 'src/prisma.service';
-import { JwtDto, SignInDto } from './dto';
+import { JwtDto, RegisterDto, SignInDto } from './dto';
 import * as bcrypt from 'bcrypt';
 import { JwtService } from '@nestjs/jwt';
 
@@ -15,10 +15,26 @@ export class AuthService {
       },
     });
 
-    if (!user) throw new ForbiddenException('Acess denied!');
+    if (!user) throw new NotFoundException('User not found!');
 
     const isMatch = await bcrypt.compare(data.password, user.password);
-    if (!isMatch) throw new ForbiddenException('Acess denied!');
+    if (!isMatch) throw new ForbiddenException('Access denied!');
+
+    const tokens = await this.generateTokens(user.userId, user.email);
+    return tokens;
+  }
+
+  async register(data: RegisterDto): Promise<JwtDto> {
+    const password = await this.hashPassword(data.password);
+    const user = await this.prisma.user.create({
+      data: {
+        email: data.email,
+        password,
+        username: data.username,
+      },
+    });
+
+    if (!user) throw new ForbiddenException('Acess denied!');
 
     const tokens = await this.generateTokens(user.userId, user.email);
     return tokens;
