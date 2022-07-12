@@ -11,12 +11,14 @@ datasource db {
 }
 
 model User {
-  userId   String   @id @default(uuid())
-  email    String   @unique
-  username String   @unique
-  password String
-  name     String?
-  profile  Profile?
+  userId        String    @id @default(uuid())
+  email         String    @unique
+  username      String    @unique
+  password      String
+  name          String?
+  profile       Profile?
+  memories      Memorie[] @relation("OwnMemories")
+  likedMemories Memorie[] @relation("LikedMemories")
 }
 
 model Profile {
@@ -25,4 +27,15 @@ model Profile {
   image     String?
   user      User    @relation(fields: [userId], references: [userId])
   userId    String  @unique
+}
+
+model Memorie {
+  memorieId   String   @id @default(uuid())
+  title       String
+  description String
+  image       String
+  hashtags    String[]
+  owner       User     @relation("OwnMemories", fields: [ownerId], references: [userId])
+  ownerId     String
+  likedBy     User[]   @relation("LikedMemories")
 }
