@@ -10,9 +10,10 @@ import {
   ValidationPipe,
 } from '@nestjs/common';
 import { GetCurrentUser } from 'src/common/decorators';
-import { ATGuard } from 'src/common/guards';
+import { ATGuard, RTGuard } from 'src/common/guards';
 import { AuthService } from './auth.service';
 import { RegisterDto, SignInDto } from './dto';
+import { JwtType } from './types';
 
 @Controller('auth')
 export class AuthController {
@@ -21,14 +22,14 @@ export class AuthController {
   @Get('signin')
   @UsePipes(new ValidationPipe())
   @HttpCode(HttpStatus.OK)
-  async signIn(@Body() user: SignInDto) {
+  async signIn(@Body() user: SignInDto): Promise<JwtType> {
     return await this.authService.signIn(user);
   }
 
   @Post('register')
   @UsePipes(new ValidationPipe())
   @HttpCode(HttpStatus.CREATED)
-  async register(@Body() user: RegisterDto) {
+  async register(@Body() user: RegisterDto): Promise<JwtType> {
     return await this.authService.register(user);
   }
 
@@ -36,10 +37,20 @@ export class AuthController {
   @UseGuards(ATGuard)
   @HttpCode(HttpStatus.OK)
   // we can get only the sub field from decorator
-  async logout(@GetCurrentUser('sub') userId: string) {
+  async logout(@GetCurrentUser('userId') userId: string) {
     await this.authService.logout(userId);
     return {
       message: 'Logged out!',
     };
+  }
+
+  @Post('refresh')
+  @UseGuards(RTGuard)
+  @HttpCode(HttpStatus.OK)
+  async refresh(@GetCurrentUser() user): Promise<JwtType> {
+    return await this.authService.refreshTokens(
+      user['userId'],
+      user['refreshToken'],
+    );
   }
 }

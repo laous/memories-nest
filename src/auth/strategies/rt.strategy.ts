@@ -17,7 +17,8 @@ export class RTStrategy extends PassportStrategy(Strategy, 'jwt-refresh') {
     // we extract the token here
     const refreshToken = req.get('authorization').replace('Bearer', '').trim();
     return {
-      ...payload,
+      userId: payload.userId,
+      email: payload.email,
       refreshToken,
     };
   }

@@ -13,6 +13,9 @@ export class ATStrategy extends PassportStrategy(Strategy, 'jwt') {
 
   validate(payload: any) {
     // what happen is req.user  = payload
-    return payload;
+    return {
+      userId: payload.userId,
+      email: payload.email,
+    };
   }
 }
