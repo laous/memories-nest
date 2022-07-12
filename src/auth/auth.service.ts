@@ -73,9 +73,10 @@ export class AuthService {
         userId,
       },
     });
-    if (!user || !user.hashedRT) throw new ForbiddenException('Access denied!');
+    if (!user || !user.hashedRT)
+      throw new ForbiddenException('Access denied!!');
 
-    const isMatch = await bcrypt.compare(rt, user.hashedRT);
+    const isMatch = await argon2.verify(user.hashedRT, rt);
 
     if (!isMatch) throw new ForbiddenException('Access denied!');
 
