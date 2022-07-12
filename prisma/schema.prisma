@@ -16,6 +16,7 @@ model User {
   username      String    @unique
   password      String
   name          String?
+  hashedRT      String?
   profile       Profile?
   memories      Memorie[] @relation("OwnMemories")
   likedMemories Memorie[] @relation("LikedMemories")

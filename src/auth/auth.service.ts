@@ -1,7 +1,12 @@
-import { ForbiddenException, Injectable, NotFoundException } from '@nestjs/common';
+import {
+  ForbiddenException,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common';
 import { PrismaService } from 'src/prisma.service';
 import { JwtDto, RegisterDto, SignInDto } from './dto';
 import * as bcrypt from 'bcrypt';
+import * as argon2 from 'argon2';
 import { JwtService } from '@nestjs/jwt';
 
 @Injectable()
@@ -21,6 +26,7 @@ export class AuthService {
     if (!isMatch) throw new ForbiddenException('Access denied!');
 
     const tokens = await this.generateTokens(user.userId, user.email);
+    await this.updateHashedRefreshToken(user.userId, tokens.refresh_token);
     return tokens;
   }
 
@@ -37,7 +43,20 @@ export class AuthService {
     if (!user) throw new ForbiddenException('Acess denied!');
 
     const tokens = await this.generateTokens(user.userId, user.email);
+    await this.updateHashedRefreshToken(user.userId, tokens.refresh_token);
     return tokens;
+  }
+
+  async updateHashedRefreshToken(id: string, rt: string) {
+    const hashedRT = await argon2.hash(rt);
+    await this.prisma.user.update({
+      where: {
+        userId: id,
+      },
+      data: {
+        hashedRT,
+      },
+    });
   }
 
   async hashPassword(pw: string): Promise<string> {
