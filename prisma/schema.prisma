@@ -19,6 +19,7 @@ model User {
   profile       Profile?
   memories      Memorie[] @relation("OwnMemories")
   likedMemories Memorie[] @relation("LikedMemories")
+  Comment       Comment[]
 }
 
 model Profile {
@@ -30,12 +31,23 @@ model Profile {
 }
 
 model Memorie {
-  memorieId   String   @id @default(uuid())
+  memorieId   String    @id @default(uuid())
   title       String
   description String
   image       String
   hashtags    String[]
-  owner       User     @relation("OwnMemories", fields: [ownerId], references: [userId])
+  owner       User      @relation("OwnMemories", fields: [ownerId], references: [userId])
   ownerId     String
-  likedBy     User[]   @relation("LikedMemories")
+  likedBy     User[]    @relation("LikedMemories")
+  comments    Comment[]
+}
+
+model Comment {
+  commentId String   @id @default(uuid())
+  title     String
+  content   String
+  author    User     @relation(fields: [authorId], references: [userId])
+  authorId  String
+  memorie   Memorie? @relation(fields: [memorieId], references: [memorieId])
+  memorieId String?
 }
