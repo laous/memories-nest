@@ -4,16 +4,17 @@ import {
   NotFoundException,
 } from '@nestjs/common';
 import { PrismaService } from 'src/prisma.service';
-import { JwtDto, RegisterDto, SignInDto } from './dto';
+import { RegisterDto, SignInDto } from './dto';
 import * as bcrypt from 'bcrypt';
 import * as argon2 from 'argon2';
 import { JwtService } from '@nestjs/jwt';
+import { JwtType, User } from './types';
 
 @Injectable()
 export class AuthService {
   constructor(private prisma: PrismaService, private jwtService: JwtService) {}
 
-  async signIn(data: SignInDto): Promise<JwtDto> {
+  async signIn(data: SignInDto): Promise<JwtType> {
     const user = await this.prisma.user.findUnique({
       where: {
         email: data.email,
@@ -30,21 +31,40 @@ export class AuthService {
     return tokens;
   }
 
-  async register(data: RegisterDto): Promise<JwtDto> {
+  async register(data: RegisterDto): Promise<JwtType> {
     const password = await this.hashPassword(data.password);
-    const user = await this.prisma.user.create({
-      data: {
-        email: data.email,
-        password,
-        username: data.username,
-      },
-    });
+    let user: User = null;
+    try {
+      user = await this.prisma.user.create({
+        data: {
+          email: data.email,
+          password,
+          username: data.username,
+        },
+      });
+    } catch (err) {
+      throw new ForbiddenException('Access denied!');
+    }
 
-    if (!user) throw new ForbiddenException('Acess denied!');
+    if (!user) throw new ForbiddenException('Access denied!');
 
     const tokens = await this.generateTokens(user.userId, user.email);
     await this.updateHashedRefreshToken(user.userId, tokens.refresh_token);
     return tokens;
+  }
+
+  async logout(userId: string) {
+    await this.prisma.user.updateMany({
+      where: {
+        userId,
+        hashedRT: {
+          not: null,
+        },
+      },
+      data: {
+        hashedRT: null,
+      },
+    });
   }
 
   async updateHashedRefreshToken(id: string, rt: string) {
@@ -63,7 +83,7 @@ export class AuthService {
     return await bcrypt.hash(pw, 10);
   }
 
-  async generateTokens(userId: string, email: string): Promise<JwtDto> {
+  async generateTokens(userId: string, email: string): Promise<JwtType> {
     const [at, rt] = await Promise.all([
       this.jwtService.signAsync(
         {

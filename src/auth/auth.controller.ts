@@ -5,9 +5,12 @@ import {
   HttpCode,
   HttpStatus,
   Post,
+  UseGuards,
   UsePipes,
   ValidationPipe,
 } from '@nestjs/common';
+import { GetCurrentUser } from 'src/common/decorators';
+import { ATGuard } from 'src/common/guards';
 import { AuthService } from './auth.service';
 import { RegisterDto, SignInDto } from './dto';
 
@@ -27,5 +30,16 @@ export class AuthController {
   @HttpCode(HttpStatus.CREATED)
   async register(@Body() user: RegisterDto) {
     return await this.authService.register(user);
+  }
+
+  @Post('logout')
+  @UseGuards(ATGuard)
+  @HttpCode(HttpStatus.OK)
+  // we can get only the sub field from decorator
+  async logout(@GetCurrentUser('sub') userId: string) {
+    await this.authService.logout(userId);
+    return {
+      message: 'Logged out!',
+    };
   }
 }
