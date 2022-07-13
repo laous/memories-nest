@@ -40,7 +40,15 @@ export class MemorieController {
   }
 
   @Put(':memorieId')
-  async updateMemorie() {}
+  @UseGuards(ATGuard)
+  @UsePipes(new ValidationPipe())
+  async updateMemorie(
+    @GetCurrentUser('userId') userId: string,
+    @Param('memorieId') memorieId: string,
+    @Body() memorie: MemorieDto,
+  ) {
+    return await this.memorieService.updateMemorie(userId, memorieId, memorie);
+  }
 
   @Post(':memorieId/like')
   async likeMemorie() {}
