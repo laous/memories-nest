@@ -64,5 +64,7 @@ export class MemorieController {
   async unlikeMemorie(
     @GetCurrentUser('userId') userId: string,
     @Param('memorieId') memorieId: string,
-  ) {}
+  ) {
+    return this.memorieService.unlikeMemorie(userId, memorieId);
+  }
 }

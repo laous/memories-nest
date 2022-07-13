@@ -53,7 +53,7 @@ export class MemorieService {
   }
 
   async likeMemorie(userId: string, memorieId: string) {
-    const [memorie, user] = await Promise.all([
+    await Promise.all([
       this.checkIfMemorieExist(memorieId),
       this.checkIfUserExist(userId),
     ]);
@@ -65,6 +65,26 @@ export class MemorieService {
       data: {
         likedBy: {
           connect: {
+            userId,
+          },
+        },
+      },
+    });
+  }
+
+  async unlikeMemorie(userId: string, memorieId: string) {
+    await Promise.all([
+      this.checkIfMemorieExist(memorieId),
+      this.checkIfUserExist(userId),
+    ]);
+
+    return await this.prisma.memorie.update({
+      where: {
+        memorieId,
+      },
+      data: {
+        likedBy: {
+          disconnect: {
             userId,
           },
         },
