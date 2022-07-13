@@ -4,11 +4,11 @@ import {
   NotFoundException,
 } from '@nestjs/common';
 import { PrismaService } from 'src/prisma.service';
-import { RegisterDto, SignInDto } from './dto';
+import { RegisterDto, SignInDto } from '../common/dto';
 import * as bcrypt from 'bcrypt';
 import * as argon2 from 'argon2';
 import { JwtService } from '@nestjs/jwt';
-import { JwtType, User } from './types';
+import { JwtType, UserType } from 'src/common/types';
 
 @Injectable()
 export class AuthService {
@@ -33,7 +33,7 @@ export class AuthService {
 
   async register(data: RegisterDto): Promise<JwtType> {
     const password = await this.hashPassword(data.password);
-    let user: User = null;
+    let user: UserType = null;
     try {
       user = await this.prisma.user.create({
         data: {
@@ -54,7 +54,7 @@ export class AuthService {
   }
 
   async logout(userId: string) {
-    await this.prisma.user.updateMany({
+    return await this.prisma.user.updateMany({
       where: {
         userId,
         hashedRT: {

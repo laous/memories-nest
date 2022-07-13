@@ -12,8 +12,8 @@ import {
 import { GetCurrentUser } from 'src/common/decorators';
 import { ATGuard, RTGuard } from 'src/common/guards';
 import { AuthService } from './auth.service';
-import { RegisterDto, SignInDto } from './dto';
-import { JwtType } from './types';
+import { RegisterDto, SignInDto } from '../common/dto';
+import { JwtType } from 'src/common/types';
 
 @Controller('auth')
 export class AuthController {
