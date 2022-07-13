@@ -50,6 +50,16 @@ export class MemorieController {
     return await this.memorieService.updateMemorie(userId, memorieId, memorie);
   }
 
+  @Delete(':memorieId')
+  @UseGuards(ATGuard)
+  @UsePipes(new ValidationPipe())
+  async deleteMemorie(
+    @GetCurrentUser('userId') userId: string,
+    @Param('memorieId') memorieId: string,
+  ) {
+    return await this.memorieService.deleteMemorie(userId, memorieId);
+  }
+
   @Post(':memorieId/like')
   @UseGuards(ATGuard)
   async likeMemorie(

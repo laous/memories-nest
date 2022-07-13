@@ -66,6 +66,19 @@ export class MemorieService {
     });
   }
 
+  async deleteMemorie(userId: string, memorieId: string) {
+    const memorie = await this.checkIfMemorieExist(memorieId);
+
+    if (memorie.ownerId !== userId)
+      throw new ForbiddenException('Acess denied!');
+
+    return await this.prisma.memorie.delete({
+      where: {
+        memorieId,
+      },
+    });
+  }
+
   async likeMemorie(userId: string, memorieId: string) {
     await Promise.all([
       this.checkIfMemorieExist(memorieId),
