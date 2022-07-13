@@ -13,7 +13,7 @@ export class RTStrategy extends PassportStrategy(Strategy, 'jwt-refresh') {
     });
   }
 
-  validate(req: Request, payload: any) {
+  validate(req: Request, payload: payloadType) {
     // we extract the token here
     const refreshToken = req.get('authorization').replace('Bearer', '').trim();
     return {
@@ -23,3 +23,8 @@ export class RTStrategy extends PassportStrategy(Strategy, 'jwt-refresh') {
     };
   }
 }
+
+type payloadType = {
+  sub: string;
+  email: string;
+};
