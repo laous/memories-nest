@@ -51,8 +51,18 @@ export class MemorieController {
   }
 
   @Post(':memorieId/like')
-  async likeMemorie() {}
+  @UseGuards(ATGuard)
+  async likeMemorie(
+    @GetCurrentUser('userId') userId: string,
+    @Param('memorieId') memorieId: string,
+  ) {
+    return this.memorieService.likeMemorie(userId, memorieId);
+  }
 
   @Delete(':memorieId/like')
-  async unlikeMemorie() {}
+  @UseGuards(ATGuard)
+  async unlikeMemorie(
+    @GetCurrentUser('userId') userId: string,
+    @Param('memorieId') memorieId: string,
+  ) {}
 }

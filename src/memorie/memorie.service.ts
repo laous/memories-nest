@@ -37,13 +37,7 @@ export class MemorieService {
   }
 
   async updateMemorie(userId: string, memorieId: string, data: MemorieDto) {
-    const memorie = await this.prisma.memorie.findUnique({
-      where: {
-        memorieId,
-      },
-    });
-
-    if (!memorie) throw new NotFoundException('Memorie not found!');
+    const memorie = await this.checkIfMemorieExist(memorieId);
 
     if (memorie.ownerId !== userId)
       throw new ForbiddenException('Acess denied!');
@@ -56,5 +50,47 @@ export class MemorieService {
         ...data,
       },
     });
+  }
+
+  async likeMemorie(userId: string, memorieId: string) {
+    const [memorie, user] = await Promise.all([
+      this.checkIfMemorieExist(memorieId),
+      this.checkIfUserExist(userId),
+    ]);
+
+    return await this.prisma.memorie.update({
+      where: {
+        memorieId,
+      },
+      data: {
+        likedBy: {
+          connect: {
+            userId,
+          },
+        },
+      },
+    });
+  }
+
+  async checkIfMemorieExist(memorieId: string) {
+    const memorie = await this.prisma.memorie.findUnique({
+      where: {
+        memorieId,
+      },
+    });
+
+    if (!memorie) throw new NotFoundException('Memorie not found!');
+    return memorie;
+  }
+
+  async checkIfUserExist(userId: string) {
+    const user = await this.prisma.user.findUnique({
+      where: {
+        userId,
+      },
+    });
+
+    if (!user) throw new NotFoundException('User not found!');
+    return user;
   }
 }
