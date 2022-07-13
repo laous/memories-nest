@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { MemorieDto } from 'src/common/dto';
 import { MemorieType } from 'src/common/types';
 import { PrismaService } from 'src/prisma.service';
@@ -18,5 +18,17 @@ export class MemorieService {
         ownerId: userId,
       },
     });
+  }
+
+  async getMemorie(memorieId: string): Promise<MemorieType> {
+    const memorie = await this.prisma.memorie.findUnique({
+      where: {
+        memorieId,
+      },
+    });
+
+    if (!memorie) throw new NotFoundException('Memorie not found!');
+
+    return memorie;
   }
 }

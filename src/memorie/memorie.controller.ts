@@ -3,6 +3,7 @@ import {
   Controller,
   Delete,
   Get,
+  Param,
   Post,
   Put,
   UseGuards,
@@ -34,7 +35,9 @@ export class MemorieController {
   }
 
   @Get(':memorieId')
-  async getMemorie() {}
+  async getMemorie(@Param('memorieId') memorieId: string) {
+    return this.memorieService.getMemorie(memorieId);
+  }
 
   @Put(':memorieId')
   async updateMemorie() {}
