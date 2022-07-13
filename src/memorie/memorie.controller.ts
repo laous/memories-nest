@@ -82,4 +82,18 @@ export class MemorieController {
   ) {
     return await this.memorieService.addComment(userId, memorieId, comment);
   }
+
+  @Delete(':memorieId/comments/:commentId')
+  @UseGuards(ATGuard)
+  async deleteComment(
+    @GetCurrentUser('userId') userId: string,
+    @Param('memorieId') memorieId: string,
+    @Param('commentId') commentId: string,
+  ) {
+    return await this.memorieService.deleteComment(
+      commentId,
+      memorieId,
+      userId,
+    );
+  }
 }

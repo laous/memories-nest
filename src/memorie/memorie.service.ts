@@ -15,6 +15,16 @@ export class MemorieService {
     return await this.prisma.memorie.findMany({
       include: {
         comments: true,
+        owner: {
+          select: {
+            username: true,
+            profile: {
+              select: {
+                image: true,
+              },
+            },
+          },
+        },
       },
     });
   }
@@ -135,6 +145,20 @@ export class MemorieService {
     });
   }
 
+  async deleteComment(commentId: string, memorieId: string, userId: string) {
+    const comment = await this.checkIfCommentExist(commentId);
+
+    if (comment.authorId !== userId || comment.memorieId !== memorieId) {
+      throw new ForbiddenException('Access denied! ');
+    }
+
+    return await this.prisma.comment.delete({
+      where: {
+        commentId,
+      },
+    });
+  }
+
   async checkIfMemorieExist(memorieId: string) {
     const memorie = await this.prisma.memorie.findUnique({
       where: {
@@ -155,5 +179,16 @@ export class MemorieService {
 
     if (!user) throw new NotFoundException('User not found!');
     return user;
+  }
+
+  async checkIfCommentExist(commentId: string) {
+    const comment = await this.prisma.comment.findUnique({
+      where: {
+        commentId,
+      },
+    });
+
+    if (!comment) throw new NotFoundException('Comment not found!');
+    return comment;
   }
 }
