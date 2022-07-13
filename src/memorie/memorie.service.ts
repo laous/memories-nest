@@ -3,7 +3,6 @@ import {
   Injectable,
   NotFoundException,
 } from '@nestjs/common';
-import { count } from 'console';
 import { CommentDto, MemorieDto } from 'src/common/dto';
 import { MemorieType } from 'src/common/types';
 import { PrismaService } from 'src/prisma.service';
@@ -47,6 +46,30 @@ export class MemorieService {
     const memorie = await this.prisma.memorie.findUnique({
       where: {
         memorieId,
+      },
+      include: {
+        owner: {
+          select: {
+            username: true,
+            profile: {
+              select: {
+                image: true,
+              },
+            },
+          },
+        },
+        comments: true,
+        likedBy: {
+          select: {
+            userId: true,
+            username: true,
+            profile: {
+              select: {
+                image: true,
+              },
+            },
+          },
+        },
       },
     });
 
