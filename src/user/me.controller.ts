@@ -1,5 +1,15 @@
-import { Controller, Delete, Get, Post, Put, UseGuards } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Delete,
+  Get,
+  Param,
+  Post,
+  Put,
+  UseGuards,
+} from '@nestjs/common';
 import { GetCurrentUser } from 'src/common/decorators';
+import { ProfileDto } from 'src/common/dto/me.dto';
 import { ATGuard } from 'src/common/guards';
 import { UserService } from './user.service';
 
@@ -13,25 +23,34 @@ export class MeController {
 
   @Get('memories')
   @UseGuards(ATGuard)
-  async getMyMemories() {}
+  async getMyMemories(@GetCurrentUser('userId') myId: string) {}
 
   @Get('followers')
   @UseGuards(ATGuard)
-  async getMyFollowers() {}
+  async getMyFollowers(@GetCurrentUser('userId') myId: string) {}
 
   @Get('following')
   @UseGuards(ATGuard)
-  async getMyFollowing() {}
+  async getMyFollowing(@GetCurrentUser('userId') myId: string) {}
 
   @Post('following/:userId')
   @UseGuards(ATGuard)
-  async follow() {}
+  async follow(
+    @GetCurrentUser('userId') myId: string,
+    @Param('userId') userId: string,
+  ) {}
 
   @Delete('following/:userId')
   @UseGuards(ATGuard)
-  async unfollow() {}
+  async unfollow(
+    @GetCurrentUser('userId') myId: string,
+    @Param('userId') userId: string,
+  ) {}
 
   @Put('profile')
   @UseGuards(ATGuard)
-  async updateProfile() {}
+  async updateProfile(
+    @GetCurrentUser('userId') myId: string,
+    @Body() data: ProfileDto,
+  ) {}
 }

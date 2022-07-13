@@ -40,6 +40,12 @@ export class AuthService {
           email: data.email,
           password,
           username: data.username,
+          profile: {
+            create: {
+              bio: '',
+              image: '',
+            },
+          },
         },
       });
     } catch (err) {
