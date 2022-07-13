@@ -109,7 +109,17 @@ export class MemorieService {
       this.checkIfMemorieExist(memorieId),
       this.checkIfUserExist(userId),
     ]);
+    const comments = await this.prisma.memorie
+      .findUnique({
+        where: {
+          memorieId,
+        },
+      })
+      .comments();
 
+    if (comments.find((c) => c.authorId === userId)) {
+      throw new ForbiddenException('You can only have one comment!');
+    }
     return await this.prisma.memorie.update({
       where: {
         memorieId,
