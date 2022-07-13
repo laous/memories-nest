@@ -1,7 +1,12 @@
-import { Controller } from '@nestjs/common';
+import { Controller, Get } from '@nestjs/common';
 import { MemorieService } from './memorie.service';
 
-@Controller('memorie')
+@Controller('memories')
 export class MemorieController {
   constructor(private memorieService: MemorieService) {}
+
+  @Get('')
+  async getMemories() {
+    return this.memorieService.getMemories();
+  }
 }
