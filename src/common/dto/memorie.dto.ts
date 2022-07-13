@@ -17,3 +17,13 @@ export class MemorieDto {
   @IsArray()
   hashtags: string[];
 }
+
+export class CommentDto {
+  @IsNotEmpty()
+  @IsString()
+  title: string;
+
+  @IsNotEmpty()
+  @IsString()
+  content: string;
+}

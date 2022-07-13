@@ -11,7 +11,7 @@ import {
   ValidationPipe,
 } from '@nestjs/common';
 import { GetCurrentUser } from 'src/common/decorators';
-import { MemorieDto } from 'src/common/dto';
+import { CommentDto, MemorieDto } from 'src/common/dto';
 import { ATGuard } from 'src/common/guards';
 import { MemorieService } from './memorie.service';
 
@@ -21,7 +21,7 @@ export class MemorieController {
 
   @Get('')
   async getMemories() {
-    return this.memorieService.getMemories();
+    return await this.memorieService.getMemories();
   }
 
   @Post('')
@@ -31,12 +31,12 @@ export class MemorieController {
     @GetCurrentUser('userId') userId: string,
     @Body() memorie: MemorieDto,
   ) {
-    return this.memorieService.addMemorie(userId, memorie);
+    return await this.memorieService.addMemorie(userId, memorie);
   }
 
   @Get(':memorieId')
   async getMemorie(@Param('memorieId') memorieId: string) {
-    return this.memorieService.getMemorie(memorieId);
+    return await this.memorieService.getMemorie(memorieId);
   }
 
   @Put(':memorieId')
@@ -56,7 +56,7 @@ export class MemorieController {
     @GetCurrentUser('userId') userId: string,
     @Param('memorieId') memorieId: string,
   ) {
-    return this.memorieService.likeMemorie(userId, memorieId);
+    return await this.memorieService.likeMemorie(userId, memorieId);
   }
 
   @Delete(':memorieId/like')
@@ -65,6 +65,21 @@ export class MemorieController {
     @GetCurrentUser('userId') userId: string,
     @Param('memorieId') memorieId: string,
   ) {
-    return this.memorieService.unlikeMemorie(userId, memorieId);
+    return await this.memorieService.unlikeMemorie(userId, memorieId);
+  }
+
+  @Get(':memorieId/comments')
+  async getCommentsOfMemorie(@Param('memorieId') memorieId: string) {
+    return await this.memorieService.getCommentsOfMemorie(memorieId);
+  }
+
+  @Post(':memorieId/comments')
+  @UseGuards(ATGuard)
+  async addComment(
+    @GetCurrentUser('userId') userId: string,
+    @Param('memorieId') memorieId: string,
+    @Body() comment: CommentDto,
+  ) {
+    return await this.memorieService.addComment(userId, memorieId, comment);
   }
 }

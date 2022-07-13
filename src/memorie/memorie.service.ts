@@ -3,7 +3,7 @@ import {
   Injectable,
   NotFoundException,
 } from '@nestjs/common';
-import { MemorieDto } from 'src/common/dto';
+import { CommentDto, MemorieDto } from 'src/common/dto';
 import { MemorieType } from 'src/common/types';
 import { PrismaService } from 'src/prisma.service';
 
@@ -12,7 +12,11 @@ export class MemorieService {
   constructor(private prisma: PrismaService) {}
 
   async getMemories() {
-    return await this.prisma.memorie.findMany();
+    return await this.prisma.memorie.findMany({
+      include: {
+        comments: true,
+      },
+    });
   }
 
   async addMemorie(userId: string, data: MemorieDto): Promise<MemorieType> {
@@ -86,6 +90,35 @@ export class MemorieService {
         likedBy: {
           disconnect: {
             userId,
+          },
+        },
+      },
+    });
+  }
+
+  async getCommentsOfMemorie(memorieId: string) {
+    return await this.prisma.comment.findMany({
+      where: {
+        memorieId,
+      },
+    });
+  }
+
+  async addComment(userId: string, memorieId: string, data: CommentDto) {
+    await Promise.all([
+      this.checkIfMemorieExist(memorieId),
+      this.checkIfUserExist(userId),
+    ]);
+
+    return await this.prisma.memorie.update({
+      where: {
+        memorieId,
+      },
+      data: {
+        comments: {
+          create: {
+            ...data,
+            authorId: userId,
           },
         },
       },
