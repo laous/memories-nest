@@ -25,7 +25,9 @@ export class MeController {
 
   @Get('memories')
   @UseGuards(ATGuard)
-  async getMyMemories(@GetCurrentUser('userId') myId: string) {}
+  async getMyMemories(@GetCurrentUser('userId') myId: string) {
+    return await this.userService.getMyMemories(myId);
+  }
 
   @Put('profile')
   @UseGuards(ATGuard)
