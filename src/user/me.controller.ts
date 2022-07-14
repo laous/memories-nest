@@ -44,6 +44,15 @@ export class MeController {
     return await this.userService.getMyFollowers(myId);
   }
 
+  @Delete('followers/:userId')
+  @UseGuards(ATGuard)
+  async removeFollower(
+    @GetCurrentUser('userId') myId: string,
+    @Param('userId') userId: string,
+  ) {
+    return await this.userService.removeFollower(myId, userId);
+  }
+
   @Get('following')
   @UseGuards(ATGuard)
   async getMyFollowing(@GetCurrentUser('userId') myId: string) {
