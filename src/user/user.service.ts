@@ -158,6 +158,40 @@ export class UserService {
     });
   }
 
+  async unfollow(myId: string, userId: string) {
+    const [a, b] = await Promise.all([
+      await this.checkIfUserExists(myId),
+      await this.checkIfUserExists(userId),
+    ]);
+    if (myId === userId) {
+      throw new ForbiddenException('Denied');
+    }
+    return await this.prisma.user.update({
+      where: {
+        userId: myId,
+      },
+      data: {
+        following: {
+          disconnect: {
+            userId,
+          },
+        },
+      },
+      select: {
+        userId: true,
+        email: true,
+        username: true,
+        profile: {
+          select: {
+            image: true,
+            bio: true,
+            name: true,
+          },
+        },
+      },
+    });
+  }
+
   async checkIfUserExists(userId: string) {
     const user = await this.prisma.user.findUnique({ where: { userId } });
 

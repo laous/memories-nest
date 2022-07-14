@@ -59,10 +59,12 @@ export class MeController {
     return await this.userService.follow(myId, userId);
   }
 
-  // @Delete('following/:userId')
-  // @UseGuards(ATGuard)
-  // async unfollow(
-  //   @GetCurrentUser('userId') myId: string,
-  //   @Param('userId') userId: string,
-  // ) {}
+  @Delete('following/:userId')
+  @UseGuards(ATGuard)
+  async unfollow(
+    @GetCurrentUser('userId') myId: string,
+    @Param('userId') userId: string,
+  ) {
+    return await this.userService.unfollow(myId, userId);
+  }
 }
