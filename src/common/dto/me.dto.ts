@@ -8,4 +8,8 @@ export class ProfileDto {
   @IsOptional()
   @IsString()
   image: string;
+
+  @IsOptional()
+  @IsString()
+  name: string;
 }

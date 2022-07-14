@@ -20,6 +20,7 @@ export type ProfileType = {
   bio: string | null;
   image: string | null;
   userId: string;
+  name: string | null;
 };
 
 export type UserType = {
@@ -27,7 +28,6 @@ export type UserType = {
   email: string;
   username: string;
   password: string;
-  name: string | null;
 };
 
 export type JwtType = {

@@ -12,17 +12,19 @@ export class UserService {
         userId: myId,
       },
       select: {
-        name: true,
         email: true,
         username: true,
         profile: {
           select: {
             bio: true,
             image: true,
+            name: true,
           },
         },
         likedMemories: true,
         memories: true,
+        followers: true,
+        following: true,
       },
     });
 
