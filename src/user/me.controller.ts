@@ -38,9 +38,11 @@ export class MeController {
     return await this.userService.updateMyProfile(myId, data);
   }
 
-  // @Get('followers')
-  // @UseGuards(ATGuard)
-  // async getMyFollowers(@GetCurrentUser('userId') myId: string) {}
+  @Get('followers')
+  @UseGuards(ATGuard)
+  async getMyFollowers(@GetCurrentUser('userId') myId: string) {
+    return await this.userService.getMyFollowers(myId);
+  }
 
   // @Get('following')
   // @UseGuards(ATGuard)
