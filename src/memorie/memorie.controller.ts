@@ -50,6 +50,16 @@ export class MemorieController {
     return await this.memorieService.updateMemorie(userId, memorieId, memorie);
   }
 
+  @Delete(':memorieId')
+  @UseGuards(ATGuard)
+  @UsePipes(new ValidationPipe())
+  async deleteMemorie(
+    @GetCurrentUser('userId') userId: string,
+    @Param('memorieId') memorieId: string,
+  ) {
+    return await this.memorieService.deleteMemorie(userId, memorieId);
+  }
+
   @Post(':memorieId/like')
   @UseGuards(ATGuard)
   async likeMemorie(
@@ -81,5 +91,19 @@ export class MemorieController {
     @Body() comment: CommentDto,
   ) {
     return await this.memorieService.addComment(userId, memorieId, comment);
+  }
+
+  @Delete(':memorieId/comments/:commentId')
+  @UseGuards(ATGuard)
+  async deleteComment(
+    @GetCurrentUser('userId') userId: string,
+    @Param('memorieId') memorieId: string,
+    @Param('commentId') commentId: string,
+  ) {
+    return await this.memorieService.deleteComment(
+      commentId,
+      memorieId,
+      userId,
+    );
   }
 }

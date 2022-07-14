@@ -14,7 +14,21 @@ export class MemorieService {
   async getMemories() {
     return await this.prisma.memorie.findMany({
       include: {
-        comments: true,
+        owner: {
+          select: {
+            username: true,
+            profile: {
+              select: {
+                image: true,
+              },
+            },
+          },
+        },
+        _count: {
+          select: {
+            comments: true,
+          },
+        },
       },
     });
   }
@@ -33,18 +47,45 @@ export class MemorieService {
       where: {
         memorieId,
       },
+      include: {
+        owner: {
+          select: {
+            username: true,
+            profile: {
+              select: {
+                image: true,
+              },
+            },
+          },
+        },
+        comments: true,
+        likedBy: {
+          select: {
+            userId: true,
+            username: true,
+            profile: {
+              select: {
+                image: true,
+              },
+            },
+          },
+        },
+      },
     });
 
     if (!memorie) throw new NotFoundException('Memorie not found!');
-
     return memorie;
   }
 
-  async updateMemorie(userId: string, memorieId: string, data: MemorieDto) {
+  async updateMemorie(
+    userId: string,
+    memorieId: string,
+    data: MemorieDto,
+  ): Promise<MemorieType> {
     const memorie = await this.checkIfMemorieExist(memorieId);
 
     if (memorie.ownerId !== userId)
-      throw new ForbiddenException('Acess denied!');
+      throw new ForbiddenException('Access denied!');
 
     return await this.prisma.memorie.update({
       where: {
@@ -56,7 +97,20 @@ export class MemorieService {
     });
   }
 
-  async likeMemorie(userId: string, memorieId: string) {
+  async deleteMemorie(userId: string, memorieId: string): Promise<MemorieType> {
+    const memorie = await this.checkIfMemorieExist(memorieId);
+
+    if (memorie.ownerId !== userId)
+      throw new ForbiddenException('Access denied!');
+
+    return await this.prisma.memorie.delete({
+      where: {
+        memorieId,
+      },
+    });
+  }
+
+  async likeMemorie(userId: string, memorieId: string): Promise<MemorieType> {
     await Promise.all([
       this.checkIfMemorieExist(memorieId),
       this.checkIfUserExist(userId),
@@ -97,6 +151,7 @@ export class MemorieService {
   }
 
   async getCommentsOfMemorie(memorieId: string) {
+    await this.checkIfMemorieExist(memorieId);
     return await this.prisma.comment.findMany({
       where: {
         memorieId,
@@ -118,7 +173,9 @@ export class MemorieService {
       .comments();
 
     if (comments.find((c) => c.authorId === userId)) {
-      throw new ForbiddenException('You can only have one comment!');
+      throw new ForbiddenException(
+        'You can only have one comment per memorie!',
+      );
     }
     return await this.prisma.memorie.update({
       where: {
@@ -131,6 +188,20 @@ export class MemorieService {
             authorId: userId,
           },
         },
+      },
+    });
+  }
+
+  async deleteComment(commentId: string, memorieId: string, userId: string) {
+    const comment = await this.checkIfCommentExist(commentId);
+
+    if (comment.authorId !== userId || comment.memorieId !== memorieId) {
+      throw new ForbiddenException('Access denied! ');
+    }
+
+    return await this.prisma.comment.delete({
+      where: {
+        commentId,
       },
     });
   }
@@ -155,5 +226,16 @@ export class MemorieService {
 
     if (!user) throw new NotFoundException('User not found!');
     return user;
+  }
+
+  async checkIfCommentExist(commentId: string) {
+    const comment = await this.prisma.comment.findUnique({
+      where: {
+        commentId,
+      },
+    });
+
+    if (!comment) throw new NotFoundException('Comment not found!');
+    return comment;
   }
 }
