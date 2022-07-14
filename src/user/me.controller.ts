@@ -34,7 +34,9 @@ export class MeController {
   async updateProfile(
     @GetCurrentUser('userId') myId: string,
     @Body() data: ProfileDto,
-  ) {}
+  ) {
+    return await this.userService.updateMyProfile(myId, data);
+  }
 
   // @Get('followers')
   // @UseGuards(ATGuard)
