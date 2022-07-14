@@ -1,4 +1,9 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import {
+  ForbiddenException,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common';
+import { use } from 'passport';
 import { ProfileDto } from 'src/common/dto';
 import { PrismaService } from 'src/prisma.service';
 
@@ -12,6 +17,7 @@ export class UserService {
         userId: myId,
       },
       select: {
+        userId: true,
         email: true,
         username: true,
         profile: {
@@ -116,6 +122,40 @@ export class UserService {
           },
         },
       });
+  }
+
+  async follow(myId: string, userId: string) {
+    const [a, b] = await Promise.all([
+      await this.checkIfUserExists(myId),
+      await this.checkIfUserExists(userId),
+    ]);
+    if (myId === userId) {
+      throw new ForbiddenException("You can't follow yourself");
+    }
+    return await this.prisma.user.update({
+      where: {
+        userId: myId,
+      },
+      data: {
+        following: {
+          connect: {
+            userId,
+          },
+        },
+      },
+      select: {
+        userId: true,
+        email: true,
+        username: true,
+        profile: {
+          select: {
+            image: true,
+            bio: true,
+            name: true,
+          },
+        },
+      },
+    });
   }
 
   async checkIfUserExists(userId: string) {

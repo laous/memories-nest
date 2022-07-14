@@ -50,12 +50,14 @@ export class MeController {
     return await this.userService.getMyFollowing(myId);
   }
 
-  // @Post('following/:userId')
-  // @UseGuards(ATGuard)
-  // async follow(
-  //   @GetCurrentUser('userId') myId: string,
-  //   @Param('userId') userId: string,
-  // ) {}
+  @Post('following/:userId')
+  @UseGuards(ATGuard)
+  async follow(
+    @GetCurrentUser('userId') myId: string,
+    @Param('userId') userId: string,
+  ) {
+    return await this.userService.follow(myId, userId);
+  }
 
   // @Delete('following/:userId')
   // @UseGuards(ATGuard)
