@@ -44,6 +44,7 @@ export class AuthService {
             create: {
               bio: '',
               image: '',
+              name: '',
             },
           },
         },

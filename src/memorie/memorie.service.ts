@@ -16,10 +16,14 @@ export class MemorieService {
       include: {
         owner: {
           select: {
+            userId: true,
+            email: true,
             username: true,
             profile: {
               select: {
                 image: true,
+                bio: true,
+                name: true,
               },
             },
           },
@@ -50,10 +54,14 @@ export class MemorieService {
       include: {
         owner: {
           select: {
+            userId: true,
+            email: true,
             username: true,
             profile: {
               select: {
                 image: true,
+                bio: true,
+                name: true,
               },
             },
           },

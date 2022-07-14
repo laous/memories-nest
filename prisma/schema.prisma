@@ -15,16 +15,18 @@ model User {
   email         String    @unique
   username      String    @unique
   password      String
-  name          String?
   hashedRT      String?
   profile       Profile?
   memories      Memorie[] @relation("OwnMemories")
   likedMemories Memorie[] @relation("LikedMemories")
   Comment       Comment[]
+  followers     User[]    @relation("Followers")
+  following     User[]    @relation("Followers")
 }
 
 model Profile {
   profileId String  @id @default(uuid())
+  name      String?
   bio       String?
   image     String?
   user      User    @relation(fields: [userId], references: [userId])

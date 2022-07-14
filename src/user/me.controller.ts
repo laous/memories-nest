@@ -38,25 +38,42 @@ export class MeController {
     return await this.userService.updateMyProfile(myId, data);
   }
 
-  // @Get('followers')
-  // @UseGuards(ATGuard)
-  // async getMyFollowers(@GetCurrentUser('userId') myId: string) {}
+  @Get('followers')
+  @UseGuards(ATGuard)
+  async getMyFollowers(@GetCurrentUser('userId') myId: string) {
+    return await this.userService.getMyFollowers(myId);
+  }
 
-  // @Get('following')
-  // @UseGuards(ATGuard)
-  // async getMyFollowing(@GetCurrentUser('userId') myId: string) {}
+  @Delete('followers/:userId')
+  @UseGuards(ATGuard)
+  async removeFollower(
+    @GetCurrentUser('userId') myId: string,
+    @Param('userId') userId: string,
+  ) {
+    return await this.userService.removeFollower(myId, userId);
+  }
 
-  // @Post('following/:userId')
-  // @UseGuards(ATGuard)
-  // async follow(
-  //   @GetCurrentUser('userId') myId: string,
-  //   @Param('userId') userId: string,
-  // ) {}
+  @Get('following')
+  @UseGuards(ATGuard)
+  async getMyFollowing(@GetCurrentUser('userId') myId: string) {
+    return await this.userService.getMyFollowing(myId);
+  }
 
-  // @Delete('following/:userId')
-  // @UseGuards(ATGuard)
-  // async unfollow(
-  //   @GetCurrentUser('userId') myId: string,
-  //   @Param('userId') userId: string,
-  // ) {}
+  @Post('following/:userId')
+  @UseGuards(ATGuard)
+  async follow(
+    @GetCurrentUser('userId') myId: string,
+    @Param('userId') userId: string,
+  ) {
+    return await this.userService.follow(myId, userId);
+  }
+
+  @Delete('following/:userId')
+  @UseGuards(ATGuard)
+  async unfollow(
+    @GetCurrentUser('userId') myId: string,
+    @Param('userId') userId: string,
+  ) {
+    return await this.userService.unfollow(myId, userId);
+  }
 }
