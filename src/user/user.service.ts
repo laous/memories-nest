@@ -93,6 +93,31 @@ export class UserService {
       });
   }
 
+  async getMyFollowing(myId: string) {
+    await this.checkIfUserExists(myId);
+
+    return await this.prisma.user
+      .findUnique({
+        where: {
+          userId: myId,
+        },
+      })
+      .following({
+        select: {
+          userId: true,
+          email: true,
+          username: true,
+          profile: {
+            select: {
+              image: true,
+              bio: true,
+              name: true,
+            },
+          },
+        },
+      });
+  }
+
   async checkIfUserExists(userId: string) {
     const user = await this.prisma.user.findUnique({ where: { userId } });
 

@@ -44,9 +44,11 @@ export class MeController {
     return await this.userService.getMyFollowers(myId);
   }
 
-  // @Get('following')
-  // @UseGuards(ATGuard)
-  // async getMyFollowing(@GetCurrentUser('userId') myId: string) {}
+  @Get('following')
+  @UseGuards(ATGuard)
+  async getMyFollowing(@GetCurrentUser('userId') myId: string) {
+    return await this.userService.getMyFollowing(myId);
+  }
 
   // @Post('following/:userId')
   // @UseGuards(ATGuard)
