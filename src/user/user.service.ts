@@ -1,4 +1,5 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
+import { ProfileDto } from 'src/common/dto';
 import { PrismaService } from 'src/prisma.service';
 
 @Injectable()
@@ -40,5 +41,28 @@ export class UserService {
     if (!user) throw new NotFoundException('User not found!');
 
     return await this.prisma.memorie.findMany({ where: { ownerId: myId } });
+  }
+
+  async updateMyProfile(myId: string, data: ProfileDto) {
+    const user = await this.prisma.user.findUnique({
+      where: {
+        userId: myId,
+      },
+    });
+
+    if (!user) throw new NotFoundException('User not found!');
+
+    return await this.prisma.profile.upsert({
+      where: {
+        userId: myId,
+      },
+      create: {
+        ...data,
+        userId: myId,
+      },
+      update: {
+        ...data,
+      },
+    });
   }
 }

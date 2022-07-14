@@ -9,7 +9,7 @@ import {
   UseGuards,
 } from '@nestjs/common';
 import { GetCurrentUser } from 'src/common/decorators';
-import { ProfileDto } from 'src/common/dto/me.dto';
+import { ProfileDto } from 'src/common/dto';
 import { ATGuard } from 'src/common/guards';
 import { UserService } from './user.service';
 
