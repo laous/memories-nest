@@ -436,7 +436,6 @@ This is a short documentation for the all routes handled.
 `Get /me/`
 
 ```json
-# id (valid uuid ) is required.
 # Authorization header(Bearer) required. (access_token)
 ```
 
@@ -472,7 +471,6 @@ This is a short documentation for the all routes handled.
 `Get /me/`
 
 ```json
-# id (valid uuid ) is required.
 # Authorization header(Bearer) required. (access_token)
 ```
 
@@ -502,7 +500,6 @@ This is a short documentation for the all routes handled.
 `PUT /me/profile`
 
 ```json
-# id (valid uuid ) is required.
 # Authorization header(Bearer) required. (access_token)
 ```
 
@@ -526,6 +523,46 @@ This is a short documentation for the all routes handled.
   "image": "",
   "userId": ""
 }
+```
+
+---
+
+### Get current user's followers
+
+`GET /me/followers`
+
+```json
+# Authorization header(Bearer) required. (access_token)
+```
+
+#### Response
+
+`Status: 200 OK`
+
+```json
+[
+  # array of users
+]
+```
+
+---
+
+### Get current user's following
+
+`GET /me/following`
+
+```json
+# Authorization header(Bearer) required. (access_token)
+```
+
+#### Response
+
+`Status: 200 OK`
+
+```json
+[
+  # array of users
+]
 ```
 
 ## Stay in touch
