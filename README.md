@@ -7,10 +7,6 @@
 
   <p align="center">Memories API - Nest.js + Prisma+ PostgreSQL</p>
 
-## Description
-
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
-
 ## Installation
 
 ```bash
@@ -30,29 +26,42 @@ $ npm run start:dev
 $ npm run start:prod
 ```
 
-## Test
+# RestAPI
+
+This is a short documentation for the all routes handled.
+
+## Authentication : /auth/
+
+### Register a new account
+
+#### Request
+
+`POST /auth/register`
 
 ```bash
-# unit tests
-$ npm run test
-
-# e2e tests
-$ npm run test:e2e
-
-# test coverage
-$ npm run test:cov
+    {
+      # all fields are required
+      "email":"tony@thesopranos.com",
+      "username":"tony",
+      "password":"tony123"
+    }
 ```
 
-## Support
+#### Response
 
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
+`Status: 201 CREATED`
+
+```bash
+    {
+      "access_token": "jwt_token",
+      "refresh_token": "jwt_token"
+    }
+```
 
 ## Stay in touch
 
-- Author - [Kamil Myśliwiec](https://kamilmysliwiec.com)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
+- Author - [Oussama Lamnaouer](https://linktr.ee/laous)
+- Website - [https://laous.netlify.app](https://laous.netlify.app)
+- Twitter - [@oussamalm\_\_](https://twitter.com/nestframework)
 
 ## License
-
-Nest is [MIT licensed](LICENSE).
