@@ -5,17 +5,17 @@
 [circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
 [circleci-url]: https://circleci.com/gh/nestjs/nest
 
-  <p align="center">Memories API - Nest.js + Prisma+ PostgreSQL</p>
+  <p align="center">Memories API - Nest.js + Typescript + Prisma + PostgreSQL /p>
 
 ## Installation
 
-```json
+```bash
 $ npm install
 ```
 
 ## Running the app
 
-```json
+```bash
 # development
 $ npm run start
 
@@ -28,7 +28,9 @@ $ npm run start:prod
 
 # RestAPI
 
-This is a short documentation for the all routes handled.
+* The application will run at 8080, you can chnage the port from ./src/main.ts
+* This is a short documentation for the all routes handled.
+* The errors are handled - More infos will be added to the documentation later.
 
 ## Authentication : /auth/
 
