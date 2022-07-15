@@ -344,6 +344,63 @@ This is a short documentation for the all routes handled.
 }
 ```
 
+### Create a new comment
+
+`POST /memories/:id/comments`
+
+```json
+# id (valid uuid) is required. (id of the memorie)
+# Authorization header(Bearer) required. (access_token)
+```
+
+```json
+{
+  # all fields are required
+  "title":"New comment from other user",
+  "content":"This is the content of my comment"
+}
+```
+
+#### Response
+
+`Status: 201 CREATED`
+
+```json
+{
+  "memorieId": "uuid",
+  "title": "New memorie",
+  "description": "This is the description!!",
+  "image": "image_link",
+  "hashtags": ["afc", "pl"],
+  "ownerId": "uuid"
+}
+```
+
+### Delete a comment
+
+`DELETE /memories/:id/comments/:commentId`
+
+```json
+# id (valid uuid) is required. (id of the memorie)
+# commentId (valid uuid) is also required.
+# Authorization header(Bearer) required. (access_token)
+```
+
+#### Response
+
+`Status: 200 OK`
+
+```json
+{
+  "memorieId": "uuid",
+  "title": "New memorie",
+  "description": "This is the description!!",
+  "image": "image_link",
+  "hashtags": ["afc", "pl"],
+  "ownerId": "uuid"
+}
+```
+
 ## Stay in touch
 
 - Author - [Oussama Lamnaouer](https://linktr.ee/laous)
