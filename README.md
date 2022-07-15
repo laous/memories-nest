@@ -141,21 +141,19 @@ This is a short documentation for the all routes handled.
   [
     {
         "memorieId": "",
-        "title": "First memorie",
-        "description": "This is the description of my first memorie.",
+        "title": "",
+        "description": "",
         "image": "",
-        "hashtags": [
-            "tag1",
-            "tag2"
-        ],
+        # array of strings
+        "hashtags": [],
         "ownerId": "",
         "owner": {
-            "email": "tony@thesopranos.com",
-            "username": "tony",
+            "email": "",
+            "username": "",
             "profile": {
                 "image": "",
-                "bio": "This is my bio!",
-                "name": "Tony Soprano"
+                "bio": "",
+                "name": ""
             }
         },
         "_count": {
@@ -181,7 +179,7 @@ This is a short documentation for the all routes handled.
       # all fields are required
       "title":"New memorie",
       "description":"This is a description!",
-      "image":"iamge_link",
+      "image":"image_link",
       "hashtags":["afc","pl"]
     }
 ```
@@ -203,7 +201,7 @@ This is a short documentation for the all routes handled.
 
 ---
 
-### Get all memories
+### Get detailed informations of a single memorie
 
 `GET /memories/:id`
 
@@ -216,32 +214,28 @@ This is a short documentation for the all routes handled.
 `Status: 200 OK`
 
 ```json
-  # get detailed informations of a single memorie
-  {
+{
     "memorieId": "",
-    "title": "New memorie",
-    "description": "This is the description!!",
+    "title": "",
+    "description": "",
     "image": "",
-    "hashtags": [
-        "afc",
-        "pl"
-    ],
-    "ownerId": ""
+    "hashtags": [],
+    "ownerId": "",
     "owner": {
         "userId": "",
-        "email": "tony@thesopranos.com",
-        "username": "tony",
+        "email": "",
+        "username": "",
         "profile": {
             "image": "",
-            "bio": "This is a bio",
-            "name": "Tony Soprano"
+            "bio": "",
+            "name": ""
         }
     },
     "comments": [ # array of comments
       {
         "commentId": "",
-        "title": "New comment",
-        "content": "Content of the new comment",
+        "title": "",
+        "content": "",
         "authorId": "",
         "memorieId": ""
       }
@@ -249,7 +243,7 @@ This is a short documentation for the all routes handled.
     "likedBy": [ # array of users who liked the memorie
       {
         "userId": "",
-        "username": "oussama",
+        "username": "",
         "profile": {
             "image": ""
         }
@@ -272,10 +266,10 @@ This is a short documentation for the all routes handled.
 ```json
 {
     # all fields are required
-    "title":"New title",
-    "description":"This is a new description!",
+    "title":"",
+    "description":"",
     "image":"",
-    "hashtags":["afc","pl"]
+    "hashtags":[]
 }
 ```
 
@@ -285,12 +279,12 @@ This is a short documentation for the all routes handled.
 
 ```json
 {
-    "memorieId": "",
-    "title":"New title",
-    "description":"This is a new description!",
-    "image":"",
-    "hashtags":["afc","pl"]
-    "ownerId": ""
+  "memorieId": "",
+  "title": "",
+  "description": "",
+  "image": "",
+  "hashtags": [],
+  "ownerId": ""
 }
 ```
 
@@ -311,12 +305,12 @@ This is a short documentation for the all routes handled.
 
 ```json
 {
-    "memorieId": "",
-    "title":"New title",
-    "description":"This is a new description!",
-    "image":"",
-    "hashtags":["afc","pl"]
-    "ownerId": ""
+  "memorieId": "",
+  "title": "",
+  "description": "",
+  "image": "",
+  "hashtags": [],
+  "ownerId": ""
 }
 ```
 
@@ -337,12 +331,12 @@ This is a short documentation for the all routes handled.
 
 ```json
 {
-    "memorieId": "",
-    "title":"New title",
-    "description":"This is a new description!",
-    "image":"",
-    "hashtags":["afc","pl"]
-    "ownerId": ""
+  "memorieId": "",
+  "title": "",
+  "description": "",
+  "image": "",
+  "hashtags": [],
+  "ownerId": ""
 }
 ```
 
@@ -363,12 +357,12 @@ This is a short documentation for the all routes handled.
 
 ```json
 {
-    "memorieId": "",
-    "title":"New title",
-    "description":"This is a new description!",
-    "image":"",
-    "hashtags":["afc","pl"]
-    "ownerId": ""
+  "memorieId": "",
+  "title": "",
+  "description": "",
+  "image": "",
+  "hashtags": [],
+  "ownerId": ""
 }
 ```
 
@@ -386,8 +380,8 @@ This is a short documentation for the all routes handled.
 ```json
 {
   # all fields are required
-  "title":"New comment from other user",
-  "content":"This is the content of my comment"
+  "title":"",
+  "content":""
 }
 ```
 
@@ -398,10 +392,10 @@ This is a short documentation for the all routes handled.
 ```json
 {
   "memorieId": "",
-  "title": "New memorie",
-  "description": "This is the description!!",
+  "title": "",
+  "description": "",
   "image": "",
-  "hashtags": ["afc", "pl"],
+  "hashtags": [],
   "ownerId": ""
 }
 ```
@@ -437,7 +431,7 @@ This is a short documentation for the all routes handled.
 
 ## Authenticated user: /me/
 
-### Get inforamtions about the current user
+### Get informations about the current user
 
 `Get /me/`
 
@@ -468,6 +462,69 @@ This is a short documentation for the all routes handled.
   "followers": [],
   # array of users whom the current user follow
   "following": []
+}
+```
+
+---
+
+### Get memories of the current user
+
+`Get /me/`
+
+```json
+# id (valid uuid ) is required.
+# Authorization header(Bearer) required. (access_token)
+```
+
+#### Response
+
+`Status: 200 OK`
+
+```json
+[
+  {
+    "memorieId": "",
+    "title": "",
+    "description": "",
+    "image": "",
+    "hashtags": [],
+    "ownerId": ""
+  }
+]
+```
+
+---
+
+### Update user's profile
+
+- Update an exisiting profile, or create one if it doens't exist.
+
+`PUT /me/profile`
+
+```json
+# id (valid uuid ) is required.
+# Authorization header(Bearer) required. (access_token)
+```
+
+```json
+{
+  "name": "",
+  "bio": "",
+  "image": ""
+}
+```
+
+#### Response
+
+`Status: 200 OK`
+
+```json
+{
+  "profileId": "",
+  "name": "",
+  "bio": "",
+  "image": "",
+  "userId": ""
 }
 ```
 
