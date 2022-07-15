@@ -16,7 +16,6 @@ export class MemorieService {
       include: {
         owner: {
           select: {
-            userId: true,
             email: true,
             username: true,
             profile: {
@@ -31,6 +30,7 @@ export class MemorieService {
         _count: {
           select: {
             comments: true,
+            likedBy: true,
           },
         },
       },

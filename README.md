@@ -116,6 +116,46 @@ This is a short documentation for the all routes handled.
     }
 ```
 
+## Memories : /memories/
+
+### Get all memories
+
+`GET /memories/`
+
+#### Response
+
+`Status: 201 CREATED`
+
+```bash
+  # array of memories
+  [
+    {
+        "memorieId": "uuid",
+        "title": "First memorie",
+        "description": "This is the description of my first memorie.",
+        "image": "image_link",
+        "hashtags": [
+            "tag1",
+            "tag2"
+        ],
+        "ownerId": "uuid",
+        "owner": {
+            "email": "tony@thesopranos.com",
+            "username": "tony",
+            "profile": {
+                "image": "image_link",
+                "bio": "This is my bio!",
+                "name": "Tony Soprano"
+            }
+        },
+        "_count": {
+            "comments": 0 , # number of comments
+            "likedBy": 2    # number of likes
+        }
+    }
+  ]
+```
+
 ## Stay in touch
 
 - Author - [Oussama Lamnaouer](https://linktr.ee/laous)
