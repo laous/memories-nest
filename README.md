@@ -140,20 +140,20 @@ This is a short documentation for the all routes handled.
   # array of memories
   [
     {
-        "memorieId": "uuid",
+        "memorieId": "",
         "title": "First memorie",
         "description": "This is the description of my first memorie.",
-        "image": "image_link",
+        "image": "",
         "hashtags": [
             "tag1",
             "tag2"
         ],
-        "ownerId": "uuid",
+        "ownerId": "",
         "owner": {
             "email": "tony@thesopranos.com",
             "username": "tony",
             "profile": {
-                "image": "image_link",
+                "image": "",
                 "bio": "This is my bio!",
                 "name": "Tony Soprano"
             }
@@ -192,12 +192,12 @@ This is a short documentation for the all routes handled.
 
 ```json
 {
-  "memorieId": "uuid",
+  "memorieId": "",
   "title": "New memorie",
   "description": "This is the description!!",
-  "image": "image_link",
+  "image": "",
   "hashtags": ["afc", "pl"],
-  "ownerId": "uuid"
+  "ownerId": ""
 }
 ```
 
@@ -208,7 +208,7 @@ This is a short documentation for the all routes handled.
 `GET /memories/:id`
 
 ```json
-# id (valid uuid) required
+# id (valid uuid ) required
 ```
 
 #### Response
@@ -218,40 +218,40 @@ This is a short documentation for the all routes handled.
 ```json
   # get detailed informations of a single memorie
   {
-    "memorieId": "uuid",
+    "memorieId": "",
     "title": "New memorie",
     "description": "This is the description!!",
-    "image": "image_link",
+    "image": "",
     "hashtags": [
         "afc",
         "pl"
     ],
-    "ownerId": "uuid"
+    "ownerId": ""
     "owner": {
-        "userId": "uuid",
+        "userId": "",
         "email": "tony@thesopranos.com",
         "username": "tony",
         "profile": {
-            "image": "image_link",
+            "image": "",
             "bio": "This is a bio",
             "name": "Tony Soprano"
         }
     },
     "comments": [ # array of comments
       {
-        "commentId": "uuid",
+        "commentId": "",
         "title": "New comment",
         "content": "Content of the new comment",
-        "authorId": "uuid",
-        "memorieId": "uuid"
+        "authorId": "",
+        "memorieId": ""
       }
     ],
     "likedBy": [ # array of users who liked the memorie
       {
-        "userId": "uuid",
+        "userId": "",
         "username": "oussama",
         "profile": {
-            "image": "image_link"
+            "image": ""
         }
       }
     ]
@@ -265,7 +265,7 @@ This is a short documentation for the all routes handled.
 `PUT /memories/:id`
 
 ```json
-# id (valid uuid) required
+# id (valid uuid ) required
 # Authorization header(Bearer) required. (access_token)
 ```
 
@@ -274,7 +274,7 @@ This is a short documentation for the all routes handled.
     # all fields are required
     "title":"New title",
     "description":"This is a new description!",
-    "image":"image_link",
+    "image":"",
     "hashtags":["afc","pl"]
 }
 ```
@@ -285,12 +285,12 @@ This is a short documentation for the all routes handled.
 
 ```json
 {
-    "memorieId": "uuid",
+    "memorieId": "",
     "title":"New title",
     "description":"This is a new description!",
-    "image":"image_link",
+    "image":"",
     "hashtags":["afc","pl"]
-    "ownerId": "uuid"
+    "ownerId": ""
 }
 ```
 
@@ -301,7 +301,7 @@ This is a short documentation for the all routes handled.
 `DELETE /memories/:id`
 
 ```json
-# id (valid uuid) required
+# id (valid uuid ) required
 # Authorization header(Bearer) required. (access_token)
 ```
 
@@ -311,12 +311,12 @@ This is a short documentation for the all routes handled.
 
 ```json
 {
-    "memorieId": "uuid",
+    "memorieId": "",
     "title":"New title",
     "description":"This is a new description!",
-    "image":"image_link",
+    "image":"",
     "hashtags":["afc","pl"]
-    "ownerId": "uuid"
+    "ownerId": ""
 }
 ```
 
@@ -327,7 +327,7 @@ This is a short documentation for the all routes handled.
 `POST /memories/:id/like`
 
 ```json
-# id (valid uuid) required
+# id (valid uuid ) required
 # Authorization header(Bearer) required. (access_token)
 ```
 
@@ -337,23 +337,23 @@ This is a short documentation for the all routes handled.
 
 ```json
 {
-    "memorieId": "uuid",
+    "memorieId": "",
     "title":"New title",
     "description":"This is a new description!",
-    "image":"image_link",
+    "image":"",
     "hashtags":["afc","pl"]
-    "ownerId": "uuid"
+    "ownerId": ""
 }
 ```
 
 ---
 
-### Unlike a memorie
+### Unlike a memorie (Remove like)
 
 `DELETE /memories/:id/like`
 
 ```json
-# id (valid uuid) required
+# id (valid uuid ) required
 # Authorization header(Bearer) required. (access_token)
 ```
 
@@ -363,12 +363,12 @@ This is a short documentation for the all routes handled.
 
 ```json
 {
-    "memorieId": "uuid",
+    "memorieId": "",
     "title":"New title",
     "description":"This is a new description!",
-    "image":"image_link",
+    "image":"",
     "hashtags":["afc","pl"]
-    "ownerId": "uuid"
+    "ownerId": ""
 }
 ```
 
@@ -379,7 +379,7 @@ This is a short documentation for the all routes handled.
 `POST /memories/:id/comments`
 
 ```json
-# id (valid uuid) is required. (id of the memorie)
+# id (valid uuid ) is required. (id of the memorie)
 # Authorization header(Bearer) required. (access_token)
 ```
 
@@ -397,12 +397,12 @@ This is a short documentation for the all routes handled.
 
 ```json
 {
-  "memorieId": "uuid",
+  "memorieId": "",
   "title": "New memorie",
   "description": "This is the description!!",
-  "image": "image_link",
+  "image": "",
   "hashtags": ["afc", "pl"],
-  "ownerId": "uuid"
+  "ownerId": ""
 }
 ```
 
@@ -413,8 +413,8 @@ This is a short documentation for the all routes handled.
 `DELETE /memories/:id/comments/:commentId`
 
 ```json
-# id (valid uuid) is required. (id of the memorie)
-# commentId (valid uuid) is also required.
+# id (valid uuid ) is required. (id of the memorie)
+# commentId (valid uuid ) is also required.
 # Authorization header(Bearer) required. (access_token)
 ```
 
@@ -424,12 +424,50 @@ This is a short documentation for the all routes handled.
 
 ```json
 {
-  "memorieId": "uuid",
-  "title": "New memorie",
-  "description": "This is the description!!",
-  "image": "image_link",
-  "hashtags": ["afc", "pl"],
-  "ownerId": "uuid"
+  "memorieId": "",
+  "title": "",
+  "description": "",
+  "image": "",
+  "hashtags": [],
+  "ownerId": ""
+}
+```
+
+---
+
+## Authenticated user: /me/
+
+### Get inforamtions about the current user
+
+`Get /me/`
+
+```json
+# id (valid uuid ) is required.
+# Authorization header(Bearer) required. (access_token)
+```
+
+#### Response
+
+`Status: 200 OK`
+
+```json
+{
+  "userId": "",
+  "email": "",
+  "username": "",
+  "profile": {
+      "bio": "",
+      "image": "",
+      "name": ""
+  },
+  # array of liked memories
+  "likedMemories": [],
+  # array of current user's memories
+  "memories": [],
+  # array of users who follow the current user
+  "followers": [],
+  # array of users whom the current user follow
+  "following": []
 }
 ```
 
