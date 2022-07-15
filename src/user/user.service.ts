@@ -3,7 +3,6 @@ import {
   Injectable,
   NotFoundException,
 } from '@nestjs/common';
-import { use } from 'passport';
 import { ProfileDto } from 'src/common/dto';
 import { PrismaService } from 'src/prisma.service';
 
