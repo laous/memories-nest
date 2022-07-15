@@ -83,8 +83,8 @@ This is a short documentation for the all routes handled.
 
 `POST /auth/logout`
 
-```console
-  Authorization header(Bearer) required. (access_token)
+```bash
+# Authorization header(Bearer) required. (access_token)
 ```
 
 #### Response
@@ -101,8 +101,8 @@ This is a short documentation for the all routes handled.
 
 `POST /auth/refresh`
 
-```console
-  Authorization header(Bearer) required. (refresh_token)
+```bash
+# Authorization header(Bearer) required. (access_token)
 ```
 
 #### Response
@@ -160,8 +160,8 @@ This is a short documentation for the all routes handled.
 
 `POST /auth/memories`
 
-```console
-  Authorization header(Bearer) required. (access_token)
+```bash
+# Authorization header(Bearer) required. (access_token)
 ```
 
 ```bash
@@ -202,10 +202,10 @@ This is a short documentation for the all routes handled.
 
 #### Response
 
-`Status: 201 CREATED`
+`Status: 200 OK`
 
 ```bash
-  # array of memories
+  # get detailed informations of a single memorie
   {
     "memorieId": "uuid",
     "title": "New memorie",
@@ -244,6 +244,40 @@ This is a short documentation for the all routes handled.
         }
       }
     ]
+}
+```
+
+### Create a new memorie
+
+`PUT /auth/memories/:id`
+
+```bash
+# id (valid uuid) required
+# Authorization header(Bearer) required. (access_token)
+```
+
+```bash
+{
+    # all fields are required
+    "title":"New title",
+    "description":"This is a new description!",
+    "image":"image_link",
+    "hashtags":["afc","pl"]
+}
+```
+
+#### Response
+
+`Status: 201 CREATED`
+
+```bash
+{
+    "memorieId": "uuid",
+    "title":"New title",
+    "description":"This is a new description!",
+    "image":"image_link",
+    "hashtags":["afc","pl"]
+    "ownerId": "uuid"
 }
 ```
 
