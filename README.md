@@ -296,6 +296,32 @@ This is a short documentation for the all routes handled.
 
 ---
 
+### Delete a memorie
+
+`DELETE /memories/:id`
+
+```json
+# id (valid uuid) required
+# Authorization header(Bearer) required. (access_token)
+```
+
+#### Response
+
+`Status: 200 OK`
+
+```json
+{
+    "memorieId": "uuid",
+    "title":"New title",
+    "description":"This is a new description!",
+    "image":"image_link",
+    "hashtags":["afc","pl"]
+    "ownerId": "uuid"
+}
+```
+
+---
+
 ### Like a memorie
 
 `POST /memories/:id/like`
@@ -320,6 +346,8 @@ This is a short documentation for the all routes handled.
 }
 ```
 
+---
+
 ### Unlike a memorie
 
 `DELETE /memories/:id/like`
@@ -343,6 +371,8 @@ This is a short documentation for the all routes handled.
     "ownerId": "uuid"
 }
 ```
+
+---
 
 ### Create a new comment
 
@@ -375,6 +405,8 @@ This is a short documentation for the all routes handled.
   "ownerId": "uuid"
 }
 ```
+
+---
 
 ### Delete a comment
 
