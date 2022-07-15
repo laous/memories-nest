@@ -84,7 +84,7 @@ This is a short documentation for the all routes handled.
 `POST /auth/logout`
 
 ```console
-    Authorization header(Bearer) required. (access_token)
+  Authorization header(Bearer) required. (access_token)
 ```
 
 #### Response
@@ -102,7 +102,7 @@ This is a short documentation for the all routes handled.
 `POST /auth/refresh`
 
 ```console
-    Authorization header(Bearer) required. (refresh_token)
+  Authorization header(Bearer) required. (refresh_token)
 ```
 
 #### Response
@@ -154,6 +154,97 @@ This is a short documentation for the all routes handled.
         }
     }
   ]
+```
+
+### Create a new memorie
+
+`POST /auth/memories`
+
+```console
+  Authorization header(Bearer) required. (access_token)
+```
+
+```bash
+    {
+      # all fields are required
+      "title":"New memorie",
+      "description":"This is a description!",
+      "image":"iamge_link",
+      "hashtags":["afc","pl"]
+    }
+```
+
+#### Response
+
+`Status: 201 CREATED`
+
+```bash
+{
+    "memorieId": "uuid",
+    "title": "New memorie",
+    "description": "This is the description!!",
+    "image": "image_link",
+    "hashtags": [
+        "afc",
+        "pl"
+    ],
+    "ownerId": "uuid"
+}
+```
+
+### Get all memories
+
+`GET /memories/:id`
+
+```bash
+# id (valid uuid) required
+```
+
+#### Response
+
+`Status: 201 CREATED`
+
+```bash
+  # array of memories
+  {
+    "memorieId": "uuid",
+    "title": "New memorie",
+    "description": "This is the description!!",
+    "image": "image_link",
+    "hashtags": [
+        "afc",
+        "pl"
+    ],
+    "ownerId": "uuid"
+    "owner": {
+        "userId": "uuid",
+        "email": "tony@thesopranos.com",
+        "username": "tony",
+        "profile": {
+            "image": "image_link",
+            "bio": "This is a bio",
+            "name": "Tony Soprano"
+        }
+    },
+    "comments": [ # array of comments
+      {
+        "commentId": "uuid",
+        "title": "New comment",
+        "content": "Content of the new comment",
+        "authorId": "uuid",
+        "memorieId": "uuid"
+      }
+    ],
+    "likedBy": [ # array of users who liked the memorie
+      {
+        "userId": "uuid",
+        "username": "oussama",
+        "profile": {
+            "image": "image_link"
+        }
+      }
+    ]
+}
 ```
 
 ## Stay in touch
