@@ -39,12 +39,12 @@ This is a short documentation for the all routes handled.
 `POST /auth/register`
 
 ```json
-    {
-      # all fields are required
-      "email":"tony@thesopranos.com",
-      "username":"tony",
-      "password":"tony123"
-    }
+{
+  # all fields are required
+  "email":"tony@thesopranos.com",
+  "username":"tony",
+  "password":"tony123"
+}
 ```
 
 #### Response
@@ -65,11 +65,11 @@ This is a short documentation for the all routes handled.
 `GET /auth/signin`
 
 ```json
-    {
-      # all fields are required
-      "email":"tony@thesopranos.com",
-      "password":"tony123"
-    }
+{
+  # all fields are required
+  "email":"tony@thesopranos.com",
+  "password":"tony123"
+}
 ```
 
 #### Response
@@ -110,7 +110,7 @@ This is a short documentation for the all routes handled.
 `POST /auth/refresh`
 
 ```json
-# Authorization header(Bearer) required. (access_token)
+# Authorization header(Bearer) required. (refresh_token)
 ```
 
 #### Response
@@ -134,34 +134,34 @@ This is a short documentation for the all routes handled.
 
 #### Response
 
-`Status: 201 CREATED`
+`Status: 200 OK`
 
 ```json
-  # array of memories
-  [
-    {
-        "memorieId": "",
-        "title": "",
-        "description": "",
-        "image": "",
-        # array of strings
-        "hashtags": [],
-        "ownerId": "",
-        "owner": {
-            "email": "",
-            "username": "",
-            "profile": {
-                "image": "",
-                "bio": "",
-                "name": ""
-            }
-        },
-        "_count": {
-            "comments": 0 , # number of comments
-            "likedBy": 2    # number of likes
+# array of memories
+[
+  {
+    "memorieId": "",
+    "title": "",
+    "description": "",
+    "image": "",
+    # array of strings
+    "hashtags": [],
+    "ownerId": "",
+    "owner": {
+        "email": "",
+        "username": "",
+        "profile": {
+            "image": "",
+            "bio": "",
+            "name": ""
         }
+    },
+    "_count": {
+        "comments": 0 , # number of comments
+        "likedBy": 2    # number of likes
     }
-  ]
+  }
+]
 ```
 
 ---
@@ -175,13 +175,13 @@ This is a short documentation for the all routes handled.
 ```
 
 ```json
-    {
-      # all fields are required
-      "title":"New memorie",
-      "description":"This is a description!",
-      "image":"image_link",
-      "hashtags":["afc","pl"]
-    }
+{
+  # all fields are required
+  "title":"New memorie",
+  "description":"This is a description!",
+  "image":"image_link",
+  "hashtags":["afc","pl"]
+}
 ```
 
 #### Response
@@ -215,40 +215,40 @@ This is a short documentation for the all routes handled.
 
 ```json
 {
-    "memorieId": "",
-    "title": "",
-    "description": "",
-    "image": "",
-    "hashtags": [],
-    "ownerId": "",
-    "owner": {
-        "userId": "",
-        "email": "",
-        "username": "",
-        "profile": {
-            "image": "",
-            "bio": "",
-            "name": ""
-        }
-    },
-    "comments": [ # array of comments
-      {
-        "commentId": "",
-        "title": "",
-        "content": "",
-        "authorId": "",
-        "memorieId": ""
+  "memorieId": "",
+  "title": "",
+  "description": "",
+  "image": "",
+  "hashtags": [],
+  "ownerId": "",
+  "owner": {
+      "userId": "",
+      "email": "",
+      "username": "",
+      "profile": {
+          "image": "",
+          "bio": "",
+          "name": ""
       }
-    ],
-    "likedBy": [ # array of users who liked the memorie
-      {
-        "userId": "",
-        "username": "",
-        "profile": {
-            "image": ""
-        }
+  },
+  "comments": [ # array of comments
+    {
+      "commentId": "",
+      "title": "",
+      "content": "",
+      "authorId": "",
+      "memorieId": ""
+    }
+  ],
+  "likedBy": [ # array of users who liked the memorie
+    {
+      "userId": "",
+      "username": "",
+      "profile": {
+          "image": ""
       }
-    ]
+    }
+  ]
 }
 ```
 
@@ -265,11 +265,11 @@ This is a short documentation for the all routes handled.
 
 ```json
 {
-    # all fields are required
-    "title":"",
-    "description":"",
-    "image":"",
-    "hashtags":[]
+  # all fields are required
+  "title":"",
+  "description":"",
+  "image":"",
+  "hashtags":[]
 }
 ```
 
@@ -495,7 +495,7 @@ This is a short documentation for the all routes handled.
 
 ### Update user's profile
 
-- Update an exisiting profile, or create one if it doens't exist.
+- Update an exisiting profile, or create one if it doesn't exist.
 
 `PUT /me/profile`
 
