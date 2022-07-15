@@ -547,6 +547,27 @@ This is a short documentation for the all routes handled.
 
 ---
 
+### Remove a follower
+
+`DELETE /me/followers/:id`
+
+```json
+# id (valid uuid) required
+# Authorization header(Bearer) required. (access_token)
+```
+
+#### Response
+
+`Status: 200 OK`
+
+```json
+{
+  # follower(user) removed
+}
+```
+
+---
+
 ### Get current user's following
 
 `GET /me/following`
@@ -563,6 +584,48 @@ This is a short documentation for the all routes handled.
 [
   # array of users
 ]
+```
+
+---
+
+### Follow a user
+
+`POST /me/following/:id`
+
+```json
+# id (valid uuid) required
+# Authorization header(Bearer) required. (access_token)
+```
+
+#### Response
+
+`Status: 200 OK`
+
+```json
+{
+  # user followed
+}
+```
+
+---
+
+### Unfollow a user
+
+`DELETE /me/following/:id`
+
+```json
+# id (valid uuid) required
+# Authorization header(Bearer) required. (access_token)
+```
+
+#### Response
+
+`Status: 200 OK`
+
+```json
+{
+  # user unfollowed
+}
 ```
 
 ## Stay in touch
