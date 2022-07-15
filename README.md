@@ -34,8 +34,6 @@ This is a short documentation for the all routes handled.
 
 ### Register a new account
 
-#### Request
-
 `POST /auth/register`
 
 ```bash
@@ -58,10 +56,49 @@ This is a short documentation for the all routes handled.
     }
 ```
 
+### Signin
+
+`GET /auth/signin`
+
+```bash
+    {
+      # all fields are required
+      "email":"tony@thesopranos.com",
+      "password":"tony123"
+    }
+```
+
+#### Response
+
+`Status: 200 OK`
+
+```bash
+    {
+      "access_token": "jwt_token",
+      "refresh_token": "jwt_token"
+    }
+```
+
+### Signin
+
+`POST /auth/logout`
+
+```console
+    Authorization header(Bearer) required. (access_token)
+```
+
+#### Response
+
+`Status: 200 OK`
+
+```bash
+    {
+      "message": "Logged out!"
+    }
+```
+
 ## Stay in touch
 
 - Author - [Oussama Lamnaouer](https://linktr.ee/laous)
 - Website - [https://laous.netlify.app](https://laous.netlify.app)
 - Twitter - [@oussamalm\_\_](https://twitter.com/nestframework)
-
-## License
