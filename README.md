@@ -79,7 +79,7 @@ This is a short documentation for the all routes handled.
     }
 ```
 
-### Signin
+### Logout
 
 `POST /auth/logout`
 
@@ -94,6 +94,25 @@ This is a short documentation for the all routes handled.
 ```bash
     {
       "message": "Logged out!"
+    }
+```
+
+### Refresh tokens
+
+`POST /auth/refresh`
+
+```console
+    Authorization header(Bearer) required. (refresh_token)
+```
+
+#### Response
+
+`Status: 200 OK`
+
+```bash
+    {
+      "access_token": "jwt_token",
+      "refresh_token": "jwt_token"
     }
 ```
 
