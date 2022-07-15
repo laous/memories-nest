@@ -9,13 +9,13 @@
 
 ## Installation
 
-```bash
+```json
 $ npm install
 ```
 
 ## Running the app
 
-```bash
+```json
 # development
 $ npm run start
 
@@ -32,11 +32,13 @@ This is a short documentation for the all routes handled.
 
 ## Authentication : /auth/
 
+---
+
 ### Register a new account
 
 `POST /auth/register`
 
-```bash
+```json
     {
       # all fields are required
       "email":"tony@thesopranos.com",
@@ -49,18 +51,20 @@ This is a short documentation for the all routes handled.
 
 `Status: 201 CREATED`
 
-```bash
-    {
-      "access_token": "jwt_token",
-      "refresh_token": "jwt_token"
-    }
+```json
+{
+  "access_token": "jwt_token",
+  "refresh_token": "jwt_token"
+}
 ```
+
+---
 
 ### Signin
 
 `GET /auth/signin`
 
-```bash
+```json
     {
       # all fields are required
       "email":"tony@thesopranos.com",
@@ -72,18 +76,20 @@ This is a short documentation for the all routes handled.
 
 `Status: 200 OK`
 
-```bash
-    {
-      "access_token": "jwt_token",
-      "refresh_token": "jwt_token"
-    }
+```json
+{
+  "access_token": "jwt_token",
+  "refresh_token": "jwt_token"
+}
 ```
+
+---
 
 ### Logout
 
 `POST /auth/logout`
 
-```bash
+```json
 # Authorization header(Bearer) required. (access_token)
 ```
 
@@ -91,17 +97,19 @@ This is a short documentation for the all routes handled.
 
 `Status: 200 OK`
 
-```bash
-    {
-      "message": "Logged out!"
-    }
+```json
+{
+  "message": "Logged out!"
+}
 ```
+
+---
 
 ### Refresh tokens
 
 `POST /auth/refresh`
 
-```bash
+```json
 # Authorization header(Bearer) required. (access_token)
 ```
 
@@ -109,14 +117,16 @@ This is a short documentation for the all routes handled.
 
 `Status: 200 OK`
 
-```bash
-    {
-      "access_token": "jwt_token",
-      "refresh_token": "jwt_token"
-    }
+```json
+{
+  "access_token": "jwt_token",
+  "refresh_token": "jwt_token"
+}
 ```
 
 ## Memories : /memories/
+
+---
 
 ### Get all memories
 
@@ -126,7 +136,7 @@ This is a short documentation for the all routes handled.
 
 `Status: 201 CREATED`
 
-```bash
+```json
   # array of memories
   [
     {
@@ -156,15 +166,17 @@ This is a short documentation for the all routes handled.
   ]
 ```
 
+---
+
 ### Create a new memorie
 
-`POST /auth/memories`
+`POST /memories`
 
-```bash
+```json
 # Authorization header(Bearer) required. (access_token)
 ```
 
-```bash
+```json
     {
       # all fields are required
       "title":"New memorie",
@@ -178,25 +190,24 @@ This is a short documentation for the all routes handled.
 
 `Status: 201 CREATED`
 
-```bash
+```json
 {
-    "memorieId": "uuid",
-    "title": "New memorie",
-    "description": "This is the description!!",
-    "image": "image_link",
-    "hashtags": [
-        "afc",
-        "pl"
-    ],
-    "ownerId": "uuid"
+  "memorieId": "uuid",
+  "title": "New memorie",
+  "description": "This is the description!!",
+  "image": "image_link",
+  "hashtags": ["afc", "pl"],
+  "ownerId": "uuid"
 }
 ```
+
+---
 
 ### Get all memories
 
 `GET /memories/:id`
 
-```bash
+```json
 # id (valid uuid) required
 ```
 
@@ -204,7 +215,7 @@ This is a short documentation for the all routes handled.
 
 `Status: 200 OK`
 
-```bash
+```json
   # get detailed informations of a single memorie
   {
     "memorieId": "uuid",
@@ -247,16 +258,18 @@ This is a short documentation for the all routes handled.
 }
 ```
 
-### Create a new memorie
+---
 
-`PUT /auth/memories/:id`
+### Update an existing memorie
 
-```bash
+`PUT /memories/:id`
+
+```json
 # id (valid uuid) required
 # Authorization header(Bearer) required. (access_token)
 ```
 
-```bash
+```json
 {
     # all fields are required
     "title":"New title",
@@ -268,9 +281,59 @@ This is a short documentation for the all routes handled.
 
 #### Response
 
-`Status: 201 CREATED`
+`Status: 200 OK`
 
-```bash
+```json
+{
+    "memorieId": "uuid",
+    "title":"New title",
+    "description":"This is a new description!",
+    "image":"image_link",
+    "hashtags":["afc","pl"]
+    "ownerId": "uuid"
+}
+```
+
+---
+
+### Like a memorie
+
+`POST /memories/:id/like`
+
+```json
+# id (valid uuid) required
+# Authorization header(Bearer) required. (access_token)
+```
+
+#### Response
+
+`Status: 200 OK`
+
+```json
+{
+    "memorieId": "uuid",
+    "title":"New title",
+    "description":"This is a new description!",
+    "image":"image_link",
+    "hashtags":["afc","pl"]
+    "ownerId": "uuid"
+}
+```
+
+### Unlike a memorie
+
+`DELETE /memories/:id/like`
+
+```json
+# id (valid uuid) required
+# Authorization header(Bearer) required. (access_token)
+```
+
+#### Response
+
+`Status: 200 OK`
+
+```json
 {
     "memorieId": "uuid",
     "title":"New title",
